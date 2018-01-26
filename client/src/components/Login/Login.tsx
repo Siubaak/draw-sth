@@ -5,8 +5,7 @@ class Login extends React.Component {
   public render(): JSX.Element {
     return (
       <div id="login">
-        <div className="item">
-        </div>
+        <div className="item" />
       </div>
     );
   }

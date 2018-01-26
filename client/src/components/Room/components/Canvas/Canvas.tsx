@@ -2,24 +2,25 @@ import * as React from 'react';
 import * as io from 'socket.io-client';
 import './Canvas.less';
 
-const canvasSize: number = 768;
-
-interface Start {
+export interface Start {
   x: number;
   y: number;
   emit?: boolean;
 }
-interface Draw {
+export interface Draw {
   x: number;
   y: number;
   color: string;
   emit?: boolean;
 }
 
-class Room extends React.Component {
+class Canvas extends React.Component {
   public state = {
-    scale: Math.min(window.innerWidth / canvasSize, 1),
+    scale: window.innerWidth > 768
+      ? Math.min(window.innerWidth - 200, window.innerHeight) / 768
+      : Math.min(window.innerWidth, window.innerHeight - 48) / 768,
   };
+  private canvasSize: number = 768;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private socket: SocketIOClient.Socket;
@@ -33,23 +34,23 @@ class Room extends React.Component {
   }
   public render(): JSX.Element {
     return (
-      <div id="room">
-        <canvas
-          id="canvas"
-          width={canvasSize}
-          height={canvasSize}
-          style={{
-            width: canvasSize * this.state.scale,
-            height: canvasSize * this.state.scale,
-          }}
-        >
-          您的浏览器不支持 HTML5 canvas 标签。
-        </canvas>
-      </div>
+      <canvas
+        id="canvas"
+        width={this.canvasSize}
+        height={this.canvasSize}
+        style={{
+          width: this.canvasSize * this.state.scale,
+          height: this.canvasSize * this.state.scale,
+        }}
+      >
+        您的浏览器不支持 HTML5 canvas 标签。
+      </canvas>
     );
   }
   private start(params: Start): void {
     let { x, y, emit = true } = params;
+    x -= this.canvas.offsetLeft;
+    y -= this.canvas.offsetTop;
     if (emit) {
       // if (this.socket.id && this.socket.id !== this.curId) {
       //   return;
@@ -63,6 +64,8 @@ class Room extends React.Component {
   }
   private draw(params: Draw): void {
     let { x, y, color, emit = true } = params;
+    x -= this.canvas.offsetLeft;
+    y -= this.canvas.offsetTop;
     if (emit) {
       // if (this.socket.id && this.socket.id !== this.curId) {
       //   return;
@@ -101,7 +104,11 @@ class Room extends React.Component {
     this.canvas.addEventListener('mouseleave', (e: MouseEvent) => mouseDraw = false);
     // For window resize
     window.addEventListener('resize', () => {
-      this.setState({ scale: Math.min(window.innerWidth / canvasSize, 1) });
+      this.setState({
+        scale: window.innerWidth > 768
+          ? Math.min(window.innerWidth - 200, window.innerHeight) / this.canvasSize
+          : Math.min(window.innerWidth, window.innerHeight - 48) / this.canvasSize
+      });
     });
   }
   private initSocketIO(): void {
@@ -112,4 +119,4 @@ class Room extends React.Component {
   }
 }
 
-export default Room;
+export default Canvas;

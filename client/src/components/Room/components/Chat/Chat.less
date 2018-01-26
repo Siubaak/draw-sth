@@ -1,0 +1,22 @@
+#chat {
+  flex: 1;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  .msg-box {
+    flex: 1;
+    border: 1px solid #000;
+  }
+  .type-box {
+    height: 36px;
+    border: 1px solid #000;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #chat {
+    flex-direction: column-reverse;
+    height: 100%;
+    width: 100%;
+  }
+}

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Login from './components/Login/Login';
+import Room from './components/Room/Room';
 import './App.less';
 
 class App extends React.Component {
   public render(): JSX.Element {
     return (
       <div className="App">
-        <Login/>
+        <Room/>
       </div>
     );
   }
