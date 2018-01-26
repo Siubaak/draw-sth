@@ -1,0 +1,16 @@
+#room {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  .item {
+    flex: 1;
+    border: 1px solid #000;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #room {
+    flex-direction: column;
+  }
+}

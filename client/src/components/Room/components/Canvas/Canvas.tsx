@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as io from 'socket.io-client';
-import './Room.less';
+import './Canvas.less';
 
 const canvasSize: number = 768;
 
