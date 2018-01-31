@@ -14,13 +14,16 @@ export interface Draw {
   emit?: boolean;
 }
 
+const chatWith: number = 306;
+const chatHeight: number = 48;
+const canvasSize: number = 768;
+
 class Canvas extends React.Component {
   public state = {
-    scale: window.innerWidth > 768
-      ? Math.min(window.innerWidth - 200, window.innerHeight) / 768
-      : Math.min(window.innerWidth, window.innerHeight - 48) / 768,
+    scale: window.innerWidth > canvasSize
+      ? Math.min(window.innerWidth - chatWith, window.innerHeight - 4) / canvasSize
+      : Math.min(window.innerWidth, window.innerHeight - chatHeight) / canvasSize,
   };
-  private canvasSize: number = 768;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private socket: SocketIOClient.Socket;
@@ -36,11 +39,11 @@ class Canvas extends React.Component {
     return (
       <canvas
         id="canvas"
-        width={this.canvasSize}
-        height={this.canvasSize}
+        width={canvasSize}
+        height={canvasSize}
         style={{
-          width: this.canvasSize * this.state.scale,
-          height: this.canvasSize * this.state.scale,
+          width: canvasSize * this.state.scale,
+          height: canvasSize * this.state.scale,
         }}
       >
         您的浏览器不支持 HTML5 canvas 标签。
@@ -105,9 +108,9 @@ class Canvas extends React.Component {
     // For window resize
     window.addEventListener('resize', () => {
       this.setState({
-        scale: window.innerWidth > 768
-          ? Math.min(window.innerWidth - 200, window.innerHeight) / this.canvasSize
-          : Math.min(window.innerWidth, window.innerHeight - 48) / this.canvasSize
+        scale: window.innerWidth > canvasSize
+          ? Math.min(window.innerWidth - chatWith, window.innerHeight - 4) / canvasSize
+          : Math.min(window.innerWidth, window.innerHeight - chatHeight) / canvasSize,
       });
     });
   }
