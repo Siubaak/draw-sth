@@ -1,13 +1,13 @@
 import * as React from 'react';
-import * as io from 'socket.io-client';
+import { socket } from '../../../../common/socket';
 import './Canvas.less';
 
-export interface Start {
+interface Start {
   x: number;
   y: number;
   emit?: boolean;
 }
-export interface Draw {
+interface Draw {
   x: number;
   y: number;
   color: string;
@@ -115,7 +115,7 @@ class Canvas extends React.Component {
     });
   }
   private initSocketIO(): void {
-    this.socket = io('http://192.168.1.157:7001');
+    this.socket = socket;
     // this.socket.on('now', (msg: any) => this.curId = msg.id);
     this.socket.on('start', (msg: Start) => this.start({ ...msg, emit: false }));
     this.socket.on('draw', (msg: Draw) => this.draw({ ...msg, emit: false }));
