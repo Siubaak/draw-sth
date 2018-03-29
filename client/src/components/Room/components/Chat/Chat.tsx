@@ -19,7 +19,14 @@ class Chat extends React.Component {
   };
   private socket: SocketIOClient.Socket;
   public componentDidMount(): void {
-    this.initSocketIO();
+    this.socket = socket;
+    
+    this.socket.on('send', (msg: Msg) => {
+      const newMsgList: Msg[] = [ ...this.state.msgList ];
+      newMsgList.unshift(msg);
+      this.setState({ msgList: newMsgList });
+    });
+
     window.addEventListener('keyup', (e: KeyboardEvent) => {
       if (e.keyCode === 13) {
         this.handleSend();
@@ -59,17 +66,7 @@ class Chat extends React.Component {
       this.socket.emit('send', newMsg);
     }
   }
-  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ msg: e.target.value });
-  }
-  private initSocketIO(): void {
-    this.socket = socket;
-    this.socket.on('send', (msg: Msg) => {
-      const newMsgList: Msg[] = [ ...this.state.msgList ];
-      newMsgList.unshift(msg);
-      this.setState({ msgList: newMsgList });
-    });
-  }
+  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ msg: e.target.value });
 }
 
 export default Chat;

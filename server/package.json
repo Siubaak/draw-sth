@@ -1,45 +1,53 @@
 {
-  "name": "draw-sth-server",
+  "name": "nest-typescript-starter",
   "version": "1.0.0",
-  "description": "The server of Draw Something",
-  "private": true,
+  "description": "Nest TypeScript starter repository",
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --write \"**/*.ts\"",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "nodemon",
+    "prestart:prod": "rm -rf dist && tsc",
+    "start:prod": "node dist/main.js",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
   "dependencies": {
-    "egg": "^2.0.0",
-    "egg-scripts": "^2.1.0",
-    "egg-socket.io": "^4.0.3"
+    "@nestjs/common": "^4.5.9",
+    "@nestjs/core": "^4.5.10",
+    "@nestjs/microservices": "^4.5.8",
+    "@nestjs/testing": "^4.5.5",
+    "@nestjs/websockets": "^4.5.8",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^5.5.6",
+    "typescript": "^2.6.2"
   },
   "devDependencies": {
-    "autod": "^3.0.1",
-    "autod-egg": "^1.0.0",
-    "egg-bin": "^4.3.5",
-    "egg-ci": "^1.8.0",
-    "egg-mock": "^3.13.0",
-    "eslint": "^4.11.0",
-    "eslint-config-egg": "^5.1.0",
-    "webstorm-disable-index": "^1.2.0"
+    "@types/express": "^4.0.39",
+    "@types/jest": "^21.1.8",
+    "@types/node": "^9.3.0",
+    "@types/supertest": "^2.0.4",
+    "jest": "^21.2.1",
+    "nodemon": "^1.14.1",
+    "prettier": "^1.11.1",
+    "supertest": "^3.0.0",
+    "ts-jest": "^21.2.4",
+    "ts-node": "^4.1.0",
+    "tsconfig-paths": "^3.1.1",
+    "tslint": "5.3.2"
   },
-  "engines": {
-    "node": ">=8.9.0"
-  },
-  "scripts": {
-    "start": "egg-scripts start --daemon",
-    "stop": "egg-scripts stop",
-    "dev": "egg-bin dev --sticky",
-    "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod"
-  },
-  "ci": {
-    "version": "8"
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "Jimkwan",
-  "license": "MIT"
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage"
+  }
 }
